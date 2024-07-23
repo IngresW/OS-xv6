@@ -323,6 +323,16 @@ r_ra()
   return x;
 }
 
+// The GCC compiler stores the frame pointer of the currently executing function in vthe register s0. 
+// This function uses "in-line assembly" to read s0.
+static inline uint64
+r_fp()
+{
+  uint64 x;
+  asm volatile("mv %0, s0" : "=r" (x) );
+  return x;
+}
+
 // flush the TLB.
 static inline void
 sfence_vma()
